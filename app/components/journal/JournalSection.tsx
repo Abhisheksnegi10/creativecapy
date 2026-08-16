@@ -16,7 +16,7 @@ const ARTICLES = [
     excerpt:
       'Why meaningful design goes beyond how something looks and focuses on the impact it creates.',
     image: "/Capy's/creative cappy.png",
-    href: '/journal',
+    href: '/journal/designing-with-purpose',
   },
   {
     category: 'Development',
@@ -25,7 +25,7 @@ const ARTICLES = [
     excerpt:
       'How writing clean and scalable code helps us build faster, perform better and grow effortlessly.',
     image: "/Capy's/coding cappy.png",
-    href: '/journal',
+    href: '/journal/clean-code',
   },
   {
     category: 'Branding',
@@ -34,7 +34,7 @@ const ARTICLES = [
     excerpt:
       'The elements that go into building a strong brand identity that stands the test of time.',
     image: "/Capy's/heart cappy.png",
-    href: '/journal',
+    href: '/journal/building-memorable-brands',
   },
   {
     category: 'Studio Life',
@@ -43,7 +43,7 @@ const ARTICLES = [
     excerpt:
       'A peek into our journey, learnings and the little things that keep us inspired every day.',
     image: "/Capy's/coffee cappy.png",
-    href: '/journal',
+    href: '/journal/lessons-from-the-studio',
   },
 ];
 
