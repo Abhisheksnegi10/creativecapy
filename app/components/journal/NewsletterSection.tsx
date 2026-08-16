@@ -1,8 +1,10 @@
 'use client';
 
+import { useActionState } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Container } from '@/app/components/ui/Container';
+import { subscribeNewsletter, type NewsletterFormState } from '@/app/actions/newsletter';
 
 /* ————————————————————————————————————————————
    Framer Motion Variants
@@ -16,10 +18,18 @@ const sectionFadeUp = {
   },
 };
 
+const initialState: NewsletterFormState = {
+  success: false,
+  error: null,
+  message: null,
+};
+
 /* ————————————————————————————————————————————
    NewsletterSection Component
    ———————————————————————————————————————————— */
 export function NewsletterSection() {
+  const [state, formAction, isPending] = useActionState(subscribeNewsletter, initialState);
+
   return (
     <section
       id="newsletter"
@@ -83,20 +93,73 @@ export function NewsletterSection() {
               resources.
             </p>
 
-            {/* Email Form */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 h-13 px-5 rounded-[10px] bg-[#1A1A1A] border border-[#F8F2E8]/10 text-[#F8F2E8] text-[0.9375rem] font-light placeholder:text-[#F8F2E8]/25 focus:outline-none focus:border-[#B87443]/50 focus:ring-1 focus:ring-[#B87443]/20 transition-all duration-300"
-              />
-              <button className="group inline-flex items-center justify-center gap-2 h-13 px-7 bg-gradient-to-r from-[#B87443] via-[#C87F4A] to-[#9A5F35] hover:from-[#C87F4A] hover:to-[#B87443] text-white font-medium text-[0.9375rem] rounded-[10px] shadow-[0_6px_24px_rgba(184,116,67,0.2)] hover:shadow-[0_12px_40px_rgba(184,116,67,0.35)] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.19,1,0.22,1)] cursor-pointer shrink-0">
-                <span>Subscribe</span>
-                <span className="text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
-                  ↗
-                </span>
-              </button>
-            </div>
+            {/* Success State */}
+            <AnimatePresence mode="wait">
+              {state.success ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: [0.19, 1, 0.22, 1] }}
+                  className="flex items-center gap-3 p-4 rounded-[10px] bg-[#B87443]/10 border border-[#B87443]/20"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B87443" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  <p className="text-[0.9375rem] text-[#B87443] font-medium">
+                    {state.message}
+                  </p>
+                </motion.div>
+              ) : (
+                <motion.div key="form" initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                  {/* Email Form */}
+                  <form action={formAction} className="flex flex-col gap-3">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        placeholder="Enter your email address"
+                        className="flex-1 h-13 px-5 rounded-[10px] bg-[#1A1A1A] border border-[#F8F2E8]/10 text-[#F8F2E8] text-[0.9375rem] font-light placeholder:text-[#F8F2E8]/25 focus:outline-none focus:border-[#B87443]/50 focus:ring-1 focus:ring-[#B87443]/20 transition-all duration-300"
+                      />
+                      <button
+                        type="submit"
+                        disabled={isPending}
+                        className="group inline-flex items-center justify-center gap-2 h-13 px-7 bg-gradient-to-r from-[#B87443] via-[#C87F4A] to-[#9A5F35] hover:from-[#C87F4A] hover:to-[#B87443] text-white font-medium text-[0.9375rem] rounded-[10px] shadow-[0_6px_24px_rgba(184,116,67,0.2)] hover:shadow-[0_12px_40px_rgba(184,116,67,0.35)] hover:-translate-y-0.5 transition-all duration-300 ease-[cubic-bezier(0.19,1,0.22,1)] cursor-pointer shrink-0 disabled:opacity-60 disabled:cursor-not-allowed"
+                      >
+                        {isPending ? (
+                          <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                          </svg>
+                        ) : (
+                          <>
+                            <span>Subscribe</span>
+                            <span className="text-sm group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                              ↗
+                            </span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    {/* Error message */}
+                    <AnimatePresence>
+                      {state.error && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="text-red-400 text-[0.8125rem]"
+                        >
+                          {state.error}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </form>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             <p className="text-[0.75rem] text-[#F8F2E8]/30 font-light">
               No spam. Unsubscribe anytime.

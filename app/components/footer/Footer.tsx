@@ -23,14 +23,14 @@ const FOOTER_LINKS = {
     { label: 'Journal', href: '/journal' },
     { label: 'Case Studies', href: '/work' },
     { label: 'FAQs', href: '/contact' },
-    { label: 'Privacy Policy', href: '#' },
+    { label: 'Privacy Policy', href: '/privacy' },
   ],
 };
 
 const SOCIALS = [
   {
     name: 'Instagram',
-    href: '#',
+    href: 'https://instagram.com/creativecapy',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
@@ -41,7 +41,7 @@ const SOCIALS = [
   },
   {
     name: 'LinkedIn',
-    href: '#',
+    href: 'https://linkedin.com/company/creativecapy',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -52,7 +52,7 @@ const SOCIALS = [
   },
   {
     name: 'Dribbble',
-    href: '#',
+    href: 'https://dribbble.com/creativecapy',
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10" />
@@ -64,7 +64,7 @@ const SOCIALS = [
   },
   {
     name: 'X',
-    href: '#',
+    href: 'https://x.com/creativecapy',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -213,6 +213,8 @@ export function Footer() {
                   href={social.href}
                   className="w-10 h-10 rounded-full border border-[#F8F2E8]/10 flex items-center justify-center text-[#F8F2E8]/50 hover:border-[#B87443] hover:text-[#B87443] hover:bg-[#B87443]/10 transition-all duration-300"
                   aria-label={social.name}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {social.icon}
                 </a>

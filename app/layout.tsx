@@ -51,12 +51,21 @@ export const metadata: Metadata = {
     title: 'CreativeCapy — Digital Design Studio',
     description:
       'Thoughtful digital experiences crafted with care. We build websites people actually enjoy using.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CreativeCapy — Digital Design Studio',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'CreativeCapy — Digital Design Studio',
     description:
       'Thoughtful digital experiences crafted with care.',
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,
